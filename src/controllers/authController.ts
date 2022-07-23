@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { insertUser } from "../repositories/authRepositories.js";
+import { getUserByEmail, insertUser } from "../repositories/authRepositories.js";
 import { passwordServices } from "../services/passwordServices.js";
+import { tokenServices } from "../services/tokenServices.js";
 
 export async function insertNewUser(req: Request, res: Response){
     let userData = req.body;
@@ -11,4 +12,15 @@ export async function insertNewUser(req: Request, res: Response){
     }
     await insertUser(newData);
     res.sendStatus(201);
+}
+
+export async function login(req: Request, res: Response) {
+    let loginData = req.body;
+    let userData = await getUserByEmail(loginData.email);
+    let passwordVerify = passwordServices.verifyPassword(loginData.password, userData.password);
+    if(!passwordVerify){
+        throw {status: 401, message: "wrong password"}
+    }
+    let token = await tokenServices.newToken(userData.id);
+    res.status(201).send(token);
 }
