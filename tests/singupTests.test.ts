@@ -3,7 +3,6 @@ import supertest from 'supertest';
 import prisma from '../src/database.js'
 
 beforeAll(async () => {
-    await prisma.$executeRaw`TRUNCATE TABLE tests;`;
     await prisma.$executeRaw`TRUNCATE TABLE users;`;
 });
 
@@ -54,6 +53,24 @@ describe("POST /sign-up",() => {
         expect(status1).toEqual(422);
         expect(status2).toEqual(422);
         expect(status3).toEqual(422);
+    });
+
+    it("returns 409 when the email is already registered", async () => {
+        let body = {
+            email: "test@test.com",
+            password: "test",
+            confirmPassword: "test"
+        }
+
+        let firstTry = await supertest(app).post("/sign-up").send(body);
+        let firstStatus = firstTry.status;
+
+        expect(firstStatus).toEqual(201);
+
+        let secondTry = await supertest(app).post("/sign-up").send(body);
+        let secondStatus = secondTry.status;
+
+        expect(secondStatus).toEqual(409);
     })
 })
 
