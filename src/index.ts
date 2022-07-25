@@ -17,6 +17,4 @@ app.use(authRouter);
 app.use(examsRouter);
 app.use(errorHandling);
 
-app.listen(process.env.PORT, () => {
-    console.log('server on');
-});
+export default app;

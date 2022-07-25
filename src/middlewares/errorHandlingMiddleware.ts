@@ -4,6 +4,7 @@ export async function errorHandling(error, req: Request, res: Response, next: Ne
     if(error.status && error.message){
         res.status(error.status).send(error.message)
     } else {
+        console.log(error);
         res.sendStatus(500);
     }
 }

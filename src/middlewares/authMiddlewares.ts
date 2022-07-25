@@ -6,8 +6,8 @@ import { loginSchema, newUserSchema } from "../schemas/userSchemas.js";
 export async function newUserMiddleware(req: Request, res: Response, next: NextFunction) {
     let body = req.body;
     let { error } = newUserSchema.validate(body);
-    if(error){
-        throw {status: 422, messsage: "invalid object"}
+    if(error || !body.confirmPassword){
+        throw {status: 422, message: "invalid object"}
     }
     let userVerify = await getUserByEmail(body.email);
     if(userVerify){

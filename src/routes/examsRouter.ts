@@ -3,6 +3,7 @@ import { getAllExamsByTeacher, getAllExamsByTerms, newTestController } from '../
 import { getExamsMiddleware, newExamsMiddleware } from '../middlewares/examsMiddlewares.js';
 
 
+
 const examsRouter = Router();
 
 examsRouter.post("/tests/new", newExamsMiddleware, newTestController);
