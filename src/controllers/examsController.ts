@@ -23,3 +23,8 @@ export async function testTests(req: Request, res: Response) {
     let tests = await getTestsByTermsAndDisciplines();
     res.send(tests);
 }
+
+export async function getAllExamsByTerms(req: Request, res: Response) {
+    let results = await getTestsByTermsAndDisciplines();
+    res.status(200).send(results);
+}

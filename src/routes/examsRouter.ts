@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import { newTestController, testTests } from '../controllers/examsController.js';
-import { newExamsMiddleware } from '../middlewares/examsMiddlewares.js';
+import { getAllExamsByTerms, newTestController } from '../controllers/examsController.js';
+import { getExamsMiddleware, newExamsMiddleware } from '../middlewares/examsMiddlewares.js';
 
 
 const examsRouter = Router();
 
 examsRouter.post("/tests/new", newExamsMiddleware, newTestController);
-examsRouter.get("/tests/discipline", testTests);
-examsRouter.get("/tests/teacher");
+examsRouter.get("/tests/discipline", getExamsMiddleware, getAllExamsByTerms);
+examsRouter.get("/tests/teacher", getExamsMiddleware);
 
 export default examsRouter;

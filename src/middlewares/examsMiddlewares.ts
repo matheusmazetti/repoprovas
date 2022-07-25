@@ -25,3 +25,15 @@ export async function newExamsMiddleware(req: Request, res: Response, next: Next
         next();
     }
 }
+
+export async function getExamsMiddleware(req: Request, res: Response, next: NextFunction) {
+    const token = req.headers.authorization?.replace("Bearer", "").trim();
+    if(!token){
+        throw {status: 401, message: "without token"}
+    }
+    let tokenData = await tokenServices.getDataFromToken(token);
+    if(!tokenData){
+        throw {status: 401, message: "invalid token"}
+    }
+    next();
+}

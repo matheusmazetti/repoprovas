@@ -55,14 +55,32 @@ export async function getDiscipline(name: string) {
 
 export async function getTestsByTermsAndDisciplines() {
     let testsResponse = await prisma.terms.findMany({
-        include:{
+        select:{
+            number: true,
             Discipline: {
-                select: {
-                    
+                select:{
+                    name: true,
+                    tests:{
+                        select:{
+                            id: true,
+                            name: true,
+                            pdfUrl: true,
+                            categories: {
+                                select:{
+                                    name: true
+                                }
+                            },
+                            teachers: {
+                                select:{
+                                    name: true
+                                }
+                            }
+                        }
+                    }
                 }
-            }          
+            }
         }
-    });
+    })
 
     return testsResponse
 }
