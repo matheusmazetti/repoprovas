@@ -12,6 +12,7 @@ async function main(){
         password: hashedPassword
       }
     });
+    
   }
   
   main().catch(e => {
