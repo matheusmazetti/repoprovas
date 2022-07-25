@@ -5,7 +5,8 @@ interface TestObject {
     name: string,
     pdfUrl: string,
     categoryId: number,
-    teacherDisciplineId: number
+    disciplineId: number,
+    teacherId: number
 }
 
 export interface ReciveTest {
@@ -52,13 +53,16 @@ export async function getDiscipline(name: string) {
     return discipline;
 }
 
-export async function getTeacherDiscipline(teacherId: number, disciplineId: number) {
-    let teacherDiscipline = await prisma.teachersDisciplines.findFirst({
-        where: {
-            disciplineId: disciplineId,
-            teacherId: teacherId
+export async function getTestsByTermsAndDisciplines() {
+    let testsResponse = await prisma.terms.findMany({
+        include:{
+            Discipline: {
+                select: {
+                    
+                }
+            }          
         }
     });
 
-    return teacherDiscipline;
+    return testsResponse
 }

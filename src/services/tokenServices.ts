@@ -4,7 +4,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 async function newToken(userId: number) {
-    let token = jwt.sign({userId: userId}, process.env.JWT_SECRET);
+    let userData = {userId: userId}
+    let token = jwt.sign(userData, process.env.JWT_SECRET);
     return token;
 }
 
