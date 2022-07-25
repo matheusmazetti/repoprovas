@@ -15,4 +15,6 @@ app.use(express.json());
 app.use(authRouter);
 app.use(examsRouter);
 
-app.listen(process.env.PORT);
+app.listen(process.env.PORT, () => {
+    console.log('server on');
+});

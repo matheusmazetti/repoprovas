@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getCategory, getDiscipline, getTeacher, getTestsByTermsAndDisciplines, newTest, ReciveTest } from "../repositories/examsRepositories.js";
+import { getCategory, getDiscipline, getTeacher, getTestsByTeachers, getTestsByTermsAndDisciplines, newTest, ReciveTest } from "../repositories/examsRepositories.js";
 
 
 export async function newTestController(req: Request, res: Response) {
@@ -19,8 +19,8 @@ export async function newTestController(req: Request, res: Response) {
     res.sendStatus(201);
 }
 
-export async function testTests(req: Request, res: Response) {
-    let tests = await getTestsByTermsAndDisciplines();
+export async function getAllExamsByTeacher(req: Request, res: Response) {
+    let tests = await getTestsByTeachers();
     res.send(tests);
 }
 
