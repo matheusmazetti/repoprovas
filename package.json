@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "npx ts-node src/server.ts",
-    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest -i"
+    "test": "dotenv -e .env.test prisma migrate dev && cross-env NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest -- -i"
   },
   "author": "",
   "license": "ISC",

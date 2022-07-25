@@ -3,7 +3,17 @@ import supertest from 'supertest';
 import prisma from '../src/database.js';
 import bcrypt from 'bcrypt';
 
-
+beforeAll(async () => {
+    await prisma.$executeRaw`TRUNCATE TABLE users;`;
+    await prisma.$executeRaw`TRUNCATE TABLE tests;`;
+    const userData = {
+        email: "test@test.com",
+        password: bcrypt.hashSync("teste", 10)
+    }
+    await prisma.users.create({
+        data: userData
+    });
+});
 const validToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIyLCJpYXQiOjE2NTg3NzU4NDV9.AYlqFL4rqqRM8kePLyFDoNMgDjugXqRfdTwwARTJ6WI';
 
 describe("POST /tests/new", () => {
